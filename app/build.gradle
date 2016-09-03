@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion "$compileSdkVersion_ver".toInteger()
+    buildToolsVersion buildToolsVersion_ver
+
+    defaultConfig {
+
+        applicationId "com.livermor.face"
+        minSdkVersion "$minSdkVersion_ver".toInteger()
+        targetSdkVersion "$compileSdkVersion_ver".toInteger()
+        versionCode "$versionCode_ver".toInteger()
+        versionName "$versionName_ver"
+        resConfigs "en", "ru"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    task ndkBuild(type: Exec) {
+        commandLine 'ndk-build', '-C', file('src/main').absolutePath
+    }
+
+
+    sourceSets {
+        main {
+            jni.srcDirs = []    //disable automatic ndk-build call with auto-generated Android.mk
+            jniLibs.srcDir 'src/main/libs'
+        }
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile project(':OpenCV')
+    testCompile 'junit:junit:4.12'
+
+    compile "com.android.support:appcompat-v7:$support_ver"
+    compile 'com.getkeepsafe.relinker:relinker:1.2.2'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+}
+repositories {
+    mavenCentral()
+}
