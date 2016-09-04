@@ -2,12 +2,13 @@
 
 buildscript {
 
-    ext.kotlin_version = '1.0.3'
-    ext.compileSdkVersion_ver = 24
+    ext.kotlin_ver = '1.0.3'
+    ext.targetSdk_ver = 22 // runtime permission are not implemented
+    ext.compileSdk_ver = 24
     ext.support_ver = '24.2.0'
-    ext.buildToolsVersion_ver = '24'
+    ext.buildTools_ver = '24'
 
-    ext.minSdkVersion_ver = 21
+    ext.minSdk_ver = 21
     ext.versionCode_ver = 1
     ext.versionName_ver = '1.0'
 
@@ -19,7 +20,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.0-rc1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_ver"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

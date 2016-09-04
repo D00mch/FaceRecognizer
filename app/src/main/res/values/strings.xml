@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Face</string>
+    <string name="photo_name">photo_name.png</string>
+
 </resources>

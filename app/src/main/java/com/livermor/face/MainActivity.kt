@@ -1,53 +1,52 @@
 package com.livermor.face
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.support.v7.app.AppCompatActivity
+import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
+
+    val TAG: String = MainActivity::class.java.simpleName
+
+    private val path: String
+            by lazy { getExternalFilesDir(null).toString() + getString(R.string.photo_name) }
+    private val imageUri: Uri by lazy { Uri.fromFile(File(path)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this, ResultActivity::class.java))
+
+        Log.i(TAG, "path == " + path)
+        Log.i(TAG, "imageUri == " + imageUri)
 
         button.setOnClickListener {
+
             val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-            cameraIntent.putExtra("android.intent.extras.CAMERA_FACING", 1)
+            cameraIntent.putExtra(MediaStore.EXTRA_FULL_SCREEN, true)
+            cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri)
+            cameraIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
         }
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Log.i(TAG, "result is ok")
+            startActivity(ResultActivity.intent(this, path))
 
-            val photo = data.extras.get("data") as Bitmap
-
-            try {
-                //Write file
-                val filename = "bitmap.png"
-                val stream = this.openFileOutput(filename, Context.MODE_PRIVATE)
-                photo.compress(Bitmap.CompressFormat.PNG, 100, stream)
-
-                //Cleanup
-                stream.close()
-                photo.recycle()
-
-                //Pop intent
-                val in1 = Intent(this, ResultActivity::class.java)
-                in1.putExtra(ResultActivity.EXTRA_IMG_PATH, filename)
-                startActivity(in1)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+//            MyToast.show("вы вышли из камеры")
         }
     }
 
