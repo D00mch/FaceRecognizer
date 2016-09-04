@@ -10,6 +10,17 @@ import kotlinx.android.synthetic.main.activity_result.*
 
 class FaceDotsActivity : AppCompatActivity() {
 
+    companion object {
+        private val TAG = FaceDotsActivity::class.java.simpleName
+        private val EXTRA_IMG_PATH = "com.livermor.face.EXTRA_IMG_PATH"
+
+        fun intent(context: Context, imgPath: String): Intent {
+            val intent = Intent(context, FaceDotsActivity::class.java)
+            intent.putExtra(EXTRA_IMG_PATH, imgPath)
+            return intent
+        }
+    }
+
     private val imgPath: String by lazy { intent.getStringExtra(EXTRA_IMG_PATH) }
 
 
@@ -20,17 +31,5 @@ class FaceDotsActivity : AppCompatActivity() {
 
         val faceViewModel = FaceDotsViewModel(this, imgPath)
         faceViewModel.imageSubject.subscribe { imageView.setImageBitmap(it) }
-    }
-
-
-    companion object {
-        private val TAG = FaceDotsActivity::class.java.simpleName
-        private val EXTRA_IMG_PATH = "com.livermor.face.EXTRA_IMG_PATH"
-
-        fun intent(context: Context, imgPath: String): Intent {
-            val intent = Intent(context, FaceDotsActivity::class.java)
-            intent.putExtra(EXTRA_IMG_PATH, imgPath)
-            return intent
-        }
     }
 }

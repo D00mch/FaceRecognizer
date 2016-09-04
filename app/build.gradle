@@ -21,7 +21,6 @@ android {
         commandLine 'ndk-build', '-C', file('src/main').absolutePath
     }
 
-
     sourceSets {
         main {
             jni.srcDirs = []    //disable automatic ndk-build call with auto-generated Android.mk
@@ -47,14 +46,22 @@ dependencies {
     compile project(':OpenCV')
     testCompile 'junit:junit:4.12'
 
+    //ui
     compile "com.android.support:appcompat-v7:$support_ver"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
 
     compile 'com.getkeepsafe.relinker:relinker:1.2.2'
+
+    //rx
     compile "io.reactivex:rxjava:$rxjava_ver"
     compile "io.reactivex:rxandroid:$rxandroid_ver"
 
+    //dagger 2
+    compile 'com.google.dagger:dagger:2.4'
+    kapt 'com.google.dagger:dagger-compiler:2.4'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }
-repositories {
-    mavenCentral()
+
+kapt {
+    generateStubs = true
 }
