@@ -1,4 +1,4 @@
-package com.livermor.face
+package com.livermor.face.screen
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.livermor.face.R
+import com.livermor.face.screen.face.FaceDotsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -30,9 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
 
-            val cameraIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             cameraIntent.putExtra(MediaStore.EXTRA_FULL_SCREEN, true)
-            cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, imageUri)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
             cameraIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
             startActivityForResult(cameraIntent, CAMERA_REQUEST)
         }
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Log.i(TAG, "result is ok")
-            startActivity(ResultActivity.intent(this, path))
+            startActivity(FaceDotsActivity.intent(this, path))
 
         } else if (resultCode == Activity.RESULT_CANCELED) {
 //            MyToast.show("вы вышли из камеры")
