@@ -29,7 +29,7 @@ class FaceDotsActivity : AppCompatActivity() {
         ReLinker.loadLibrary(this, "stasm");
         setContentView(R.layout.activity_result)
 
-        val faceViewModel = FaceDotsViewModel(this, imgPath)
+        val faceViewModel = FaceDotsViewModel(imgPath)
         faceViewModel.imageSubject.subscribe { imageView.setImageBitmap(it) }
     }
 }

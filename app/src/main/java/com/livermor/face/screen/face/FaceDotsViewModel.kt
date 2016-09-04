@@ -1,26 +1,22 @@
 package com.livermor.face.screen.face
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
 import com.livermor.face.App
-import com.livermor.face.util.BmpHelp
-import com.livermor.face.R
 import com.livermor.face.stasm.Stasm
+import com.livermor.face.stasm.StasmResourceLoader
+import com.livermor.face.util.BmpHelp
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subjects.PublishSubject
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 import javax.inject.Inject
 
 
-class FaceDotsViewModel(val context: Context, val imagePath: String) {
+class FaceDotsViewModel(val imagePath: String) {
     private val TAG = FaceDotsViewModel::class.java.simpleName
 
     val imageSubject: PublishSubject<Bitmap> by lazy { PublishSubject.create<Bitmap>() }
@@ -29,20 +25,11 @@ class FaceDotsViewModel(val context: Context, val imagePath: String) {
 
     //@Inject lateinit var newsManager: NewsManager
     @Inject lateinit var bmpHelp: BmpHelp
-    //@Inject lateinit var context: Context
-
-    private val dataDirectory: File by lazy { context.getDir("data", Context.MODE_PRIVATE) }
-    private val faceFile: File by lazy { File(dataDirectory, "haarcascade_frontalface_alt2.xml") }
-    private val leftEye: File by lazy { File(dataDirectory, "haarcascade_mcs_lefteye.xml") }
-    private val rightEye: File by lazy { File(dataDirectory, "haarcascade_mcs_righteye.xml") }
-
-
-    //private val bmpHelp by lazy { BmpHelp(context) }
+    @Inject lateinit var stasmResLoader: StasmResourceLoader
 
     init {
         App.appComponent.inject(this)
-
-        loadResources()
+        stasmResLoader.prepareResources()
 
         getDrawDotsOnFaceObservable()
                 .subscribeOn(Schedulers.newThread())
@@ -105,29 +92,4 @@ class FaceDotsViewModel(val context: Context, val imagePath: String) {
         }
     }
 
-
-    //—————————————————————————————————————————————————————————————————————— preparations
-
-    private fun loadResources() {
-        putDataFileInLocalDir(R.raw.haarcascade_frontalface_alt2, faceFile)
-        putDataFileInLocalDir(R.raw.haarcascade_mcs_lefteye, leftEye)
-        putDataFileInLocalDir(R.raw.haarcascade_mcs_righteye, rightEye)
-    }
-
-    private fun putDataFileInLocalDir(id: Int, f: File) {
-        try {
-            val inputStream = context.resources.openRawResource(id)
-            val os = FileOutputStream(f, false)
-            val buffer = ByteArray(4096)
-            var bytesRead: Int = inputStream.read(buffer)
-            while (bytesRead != -1) {
-                os.write(buffer, 0, bytesRead)
-                bytesRead = inputStream.read(buffer)
-            }
-            inputStream.close()
-            os.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.livermor.face.screen
+package com.livermor.face.screen.start
 
 import android.app.Activity
 import android.content.Intent

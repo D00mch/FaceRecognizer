@@ -9,7 +9,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(
         AppModule::class,
-        BmpHelpModule::class
+        BmpHelpModule::class,
+        StasmResLoaderModule::class
 ))
 interface AppComponent {
     fun inject(faceDotsActivity: FaceDotsViewModel)
