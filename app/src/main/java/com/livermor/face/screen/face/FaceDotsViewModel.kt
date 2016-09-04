@@ -78,8 +78,8 @@ class FaceDotsViewModel(val imagePath: String) {
 
     private fun Bitmap.drawPoints(srcPoints: IntArray) {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-        paint.color = Color.CYAN
-        paint.strokeWidth = 5f
+        paint.color = Color.RED
+        paint.strokeWidth = 10f
 
         val canvas = Canvas(this)
         var i = 0
