@@ -6,8 +6,8 @@ Basic project to recognize face features.
 
 
 The main libraries used in the project are:
-- Open cv,
-- Stasm,
+- [OpenCV](http://opencv.org/),
+- [Stasm](http://www.milbo.users.sonic.net/stasm/index.html),
 - Rxjava,
 - Dagger 2
 	
