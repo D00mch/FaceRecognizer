@@ -3,7 +3,7 @@
 buildscript {
 
     ext.kotlin_ver = '1.0.3'
-    ext.targetSdk_ver = 22 // runtime permission are not implemented
+    ext.targetSdk_ver = 24 // runtime permission are not implemented
     ext.compileSdk_ver = 24
     ext.support_ver = '24.2.0'
     ext.buildTools_ver = '24'
