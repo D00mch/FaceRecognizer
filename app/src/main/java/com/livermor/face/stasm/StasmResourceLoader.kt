@@ -1,6 +1,7 @@
 package com.livermor.face.stasm
 
 import android.content.Context
+import com.getkeepsafe.relinker.ReLinker
 import com.livermor.face.R
 import java.io.File
 import java.io.FileOutputStream
@@ -15,7 +16,12 @@ class StasmResourceLoader(private val context: Context) {
     private val leftEye: File by lazy { File(dataDirectory, "haarcascade_mcs_lefteye.xml") }
     private val rightEye: File by lazy { File(dataDirectory, "haarcascade_mcs_righteye.xml") }
 
+    init {
+        ReLinker.loadLibrary(context, "stasm");
+    }
+
     fun prepareResources() {
+
         putDataFileInLocalDir(R.raw.haarcascade_frontalface_alt2, faceFile)
         putDataFileInLocalDir(R.raw.haarcascade_mcs_lefteye, leftEye)
         putDataFileInLocalDir(R.raw.haarcascade_mcs_righteye, rightEye)

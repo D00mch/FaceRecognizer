@@ -1,13 +1,9 @@
 package com.livermor.face.screen.face
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.getkeepsafe.relinker.ReLinker
 import com.livermor.face.R
 import kotlinx.android.synthetic.main.activity_result.*
@@ -30,7 +26,6 @@ class FaceDotsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ReLinker.loadLibrary(this, "stasm");
         setContentView(R.layout.activity_result)
 
         val faceViewModel = FaceDotsViewModel(imgPath)

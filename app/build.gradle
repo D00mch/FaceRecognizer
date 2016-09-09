@@ -62,6 +62,10 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 
+repositories {
+    jcenter() //for relinker
+}
+
 kapt {
     generateStubs = true
 }
