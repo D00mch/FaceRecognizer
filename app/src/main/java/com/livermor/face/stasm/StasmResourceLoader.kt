@@ -9,16 +9,16 @@ import java.io.IOException
 
 
 class StasmResourceLoader(private val context: Context) {
-    private val TAG = StasmResourceLoader::class.java.simpleName
+
+    companion object {
+        const private val TAG = "StasmResourceLoader"
+
+    }
 
     private val dataDirectory: File by lazy { context.getDir("data", Context.MODE_PRIVATE) }
     private val faceFile: File by lazy { File(dataDirectory, "haarcascade_frontalface_alt2.xml") }
     private val leftEye: File by lazy { File(dataDirectory, "haarcascade_mcs_lefteye.xml") }
     private val rightEye: File by lazy { File(dataDirectory, "haarcascade_mcs_righteye.xml") }
-
-    init {
-        ReLinker.loadLibrary(context, "stasm");
-    }
 
     fun prepareResources() {
 

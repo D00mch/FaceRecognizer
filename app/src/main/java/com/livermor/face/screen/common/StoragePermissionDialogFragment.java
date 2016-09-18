@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
@@ -68,7 +69,8 @@ public class StoragePermissionDialogFragment extends DialogFragment {
     }
 
     @Override public void onRequestPermissionsResult(int requestCode,
-                                                     String permissions[], int[] grantResults) {
+                                                     @NonNull String permissions[],
+                                                     @NonNull int[] grantResults) {
         shouldResolve = true;
 
         for (int i = 0; i < permissions.length; i++) {
@@ -94,7 +96,9 @@ public class StoragePermissionDialogFragment extends DialogFragment {
     private void showAppSettingsDialog() {
         new AlertDialog.Builder(context)
                 .setTitle("Permissions Required")
-                .setMessage("In order to record videos, access to the camera, microphone, and storage is needed. Please enable these permissions from the app settings.")
+                .setMessage("In order to record videos, access to the camera, " +
+                        "microphone, and storage is needed. Please enable these permissions " +
+                        "from the app settings.")
                 .setPositiveButton("App Settings", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent();
